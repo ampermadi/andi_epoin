@@ -113,4 +113,20 @@ class SiswaController extends Controller
         //delete post
         $user->delete();
     }
+
+    public function edit(string $id): View
+    {
+        //get Data db
+        $siswa = DB::table('siswas')
+            ->join('users', 'siswas.id_user', '=', 'users.id')
+            ->select(
+                'siswas.*',
+                'users.name',
+                'users.email'
+            )
+            ->where('siswas.id', $id)
+            ->first();
+        
+        return view('admin.siswa.edit', compact('siswa'));
+    }
 }
